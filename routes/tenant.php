@@ -7,6 +7,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 use App\Http\Controllers\Tenant\DashboardController;
+use App\Http\Controllers\Tenant\InstructorsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::middleware([
 
     Route::prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('tenant.dashboard.index');
+        Route::resource('instructors', InstructorsController::class);
     });
 
 });

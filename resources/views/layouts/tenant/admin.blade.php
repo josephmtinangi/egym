@@ -174,7 +174,8 @@
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-spray"></i> <span> Instructors </span> <span class="menu-arrow"></span> </a>
                                 <ul class="list-unstyled">
-                                    <li><a href="#">Register New</a></li>
+                                    <li><a href="{{ route('instructors.create') }}">Register New</a></li>
+                                    <li><a href="{{ route('instructors.index') }}">List All</a></li>
                                 </ul>
                             </li>
 
