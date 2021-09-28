@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use App\Models\User;
 use App\Models\Branch;
+use App\Models\MembershipPlan;
 use Illuminate\Http\Request;
 use App\Utilities\Helper;
 use Hash;
@@ -32,7 +33,8 @@ class MembersController extends Controller
     public function create()
     {
         $branches = Branch::get();
-        return view('tenant.members.create', compact('branches'));
+        $membershipPlans = MembershipPlan::get();
+        return view('tenant.members.create', compact('branches','membershipPlans'));
     }
 
     /**

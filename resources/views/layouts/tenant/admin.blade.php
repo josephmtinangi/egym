@@ -10,6 +10,10 @@
 
     <title>@yield('title') | {{ tenant('id') }}</title>
 
+    <!-- DataTables -->
+    <link href="{{ asset('tenant/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('tenant/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />    
+
     <link href="{{ asset('tenant/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('tenant/css/icons.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('tenant/css/style.css') }}" rel="stylesheet" type="text/css" />
@@ -364,6 +368,35 @@
 
 <script src="{{ asset('tenant/js/jquery.core.js') }}"></script>
 <script src="{{ asset('tenant/js/jquery.app.js') }}"></script>
+
+<!-- Required datatable js -->
+<script src="{{ asset('tenant/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('tenant/js/dataTables.bootstrap4.min.js') }}"></script>
+<!-- Buttons examples -->
+<script src="{{ asset('tenant/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('tenant/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('tenant/js/jszip.min.js') }}"></script>
+<script src="{{ asset('tenant/js/pdfmake.min.js') }}"></script>
+<script src="{{ asset('tenant/js/vfs_fonts.js') }}"></script>
+<script src="{{ asset('tenant/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('tenant/js/buttons.print.min.js') }}"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                // Default Datatable
+                $('#datatable').DataTable();
+
+                //Buttons examples
+                var table = $('#datatable-buttons').DataTable({
+                    lengthChange: false,
+                    buttons: ['copy', 'excel', 'pdf']
+                });
+
+                table.buttons().container()
+                        .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+            } );
+        </script>
 
 </body>
 </html>

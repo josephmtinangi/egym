@@ -1,6 +1,6 @@
 <div class="form-row">
 	<div class="form-group col-md-6">
-		<label for="branch" class="col-form-label">Tawi<span class="text-danger">*</span></label>
+		<label for="branch_id" class="col-form-label">Tawi<span class="text-danger">*</span></label>
 		<select name="branch_id" id="branch_id" class="form-control" required="required">
 			@foreach($branches as $branch)
 				<option value="{{ $branch->id }}">{{ $branch->name }}</option>
@@ -63,4 +63,15 @@
 <div class="form-group">
 	<label for="address" class="col-form-label">Anuani</label>
 	<input type="text" class="form-control" name="address" id="address" value="{{ isset($member) ? $member->address : old('address') }}" placeholder="Anuani">
+</div>
+<div class="form-row">
+	<div class="form-group col-md-6">
+		<label for="membership_plan_id" class="col-form-label">Plan<span class="text-danger">*</span></label>
+		<select name="membership_plan_id" id="membership_plan_id" class="form-control" required="required">
+			<option value="">-Select-</option>
+			@foreach($membershipPlans as $membershipPlan)
+				<option value="{{ $membershipPlan->id }}">{{ $membershipPlan->name }} &middot; Tsh {{ $membershipPlan->fee }} &middot; {{ $membershipPlan->number_of_days }} days</option>
+			@endforeach
+		</select>
+	</div>
 </div>
