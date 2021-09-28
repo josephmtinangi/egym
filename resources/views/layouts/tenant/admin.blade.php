@@ -167,7 +167,8 @@
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="ti-paint-bucket"></i> <span> Members </span> <span class="menu-arrow"></span> </a>
                         <ul class="list-unstyled">
-                            <li><a href="#">Register New</a></li>
+                            <li><a href="{{ route('members.create') }}">Register New</a></li>
+                            <li><a href="{{ route('members.index') }}">List All</a></li>
                         </ul>
                     </li>
 

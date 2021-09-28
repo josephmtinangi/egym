@@ -26,6 +26,7 @@ class CreateInstructorsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('branch_id');
             $table->foreign('branch_id')->references('id')->on('branches'); 
+            $table->boolean('status')->default(true); 
             $table->timestamps();
         });
     }

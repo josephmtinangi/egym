@@ -110,7 +110,6 @@ class InstructorsController extends Controller
         $instructor = Instructor::find(Helper::decode($hashid));
         
         $instructor->branch_id = $request->branch_id;
-        $instructor->user_id = $user->id;
         $instructor->first_name = $request->first_name;
         $instructor->middle_name = $request->middle_name;
         $instructor->last_name = $request->last_name;
@@ -124,14 +123,4 @@ class InstructorsController extends Controller
         return redirect('admin/instructors');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Instructor  $instructor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Instructor $instructor)
-    {
-        //
-    }
 }

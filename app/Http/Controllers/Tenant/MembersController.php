@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Member;
+use App\Models\User;
+use App\Models\Branch;
 use Illuminate\Http\Request;
+use App\Utilities\Helper;
+use Hash;
+use Str;
 
 class MembersController extends Controller
 {
@@ -15,7 +20,8 @@ class MembersController extends Controller
      */
     public function index()
     {
-        //
+        $members = Member::with(['user','branch'])->latest()->paginate(20);
+        return view('tenant.members.index', compact('members'));
     }
 
     /**
@@ -25,7 +31,8 @@ class MembersController extends Controller
      */
     public function create()
     {
-        //
+        $branches = Branch::get();
+        return view('tenant.members.create', compact('branches'));
     }
 
     /**
@@ -36,8 +43,38 @@ class MembersController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $user = new User;
+        $user->username = '+255'.$request->phone;
+        $user->password = Hash::make($request->last_name);
+        $user->save();
+
+        $number = '0001';
+        $lastMember = Member::orderBy('id', 'desc')->first(['number']);
+        if($lastMember)
+        {
+         $numberInteger = (int)$lastMember->number + 1;
+         $number = Str::padLeft($numberInteger, 4, '0'); 
+     }        
+
+     $member = new Member;
+     $member->number = $number;
+     $member->branch_id = $request->branch_id;
+     $member->user_id = $user->id;
+     $member->first_name = $request->first_name;
+     $member->middle_name = $request->middle_name;
+     $member->last_name = $request->last_name;
+     $member->gender = $request->gender;
+     $member->date_of_birth = $request->date_of_birth;
+     $member->joining_date = $request->joining_date;
+     $member->phone = '+255'.$request->phone;
+     $member->email = $request->email;
+     $member->address = $request->address;
+     $member->save();
+
+     $request->session()->flash('successMessage', 'Success');
+
+     return redirect('admin/members');
+ }
 
     /**
      * Display the specified resource.
@@ -45,9 +82,10 @@ class MembersController extends Controller
      * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function show(Member $member)
+    public function show($hashid)
     {
-        //
+        $member = Member::find(Helper::decode($hashid));
+        return view('tenant.members.show', compact('member'));
     }
 
     /**
@@ -56,9 +94,11 @@ class MembersController extends Controller
      * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(Member $member)
+    public function edit($hashid)
     {
-        //
+        $member = Member::find(Helper::decode($hashid));
+        $branches = Branch::get();
+        return view('tenant.members.edit', compact('member','branches'));
     }
 
     /**
@@ -68,19 +108,25 @@ class MembersController extends Controller
      * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Member $member)
+    public function update(Request $request, $hashid)
     {
-        //
-    }
+       $member = Member::find(Helper::decode($hashid));
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Member  $member
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Member $member)
-    {
-        //
-    }
+       $member->branch_id = $request->branch_id;
+       $member->first_name = $request->first_name;
+       $member->middle_name = $request->middle_name;
+       $member->last_name = $request->last_name;
+       $member->gender = $request->gender;
+       $member->date_of_birth = $request->date_of_birth;
+       $member->joining_date = $request->joining_date;
+       $member->phone = '+255'.$request->phone;
+       $member->email = $request->email;
+       $member->address = $request->address;
+       $member->save();
+
+       $request->session()->flash('successMessage', 'Success');
+
+       return redirect('admin/members');
+   }
+
 }

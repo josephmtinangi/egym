@@ -34,7 +34,7 @@
 	</div>
 	<div class="form-group col-md-6">
 		<label for="email" class="col-form-label">Barua Pepe</label>
-		<input type="email" class="form-control" id="email" value="{{ isset($instructor) ? $instructor->email : old('email') }}" placeholder="Barua Pepe">
+		<input type="email" class="form-control" name="email" id="email" value="{{ isset($instructor) ? $instructor->email : old('email') }}" placeholder="Barua Pepe">
 	</div>
 </div>
 <div class="form-group">

@@ -1,17 +1,17 @@
 @extends('layouts.tenant.admin')
 
-@section('title', 'Instructors')
+@section('title', 'Members')
 
 @section('content')
 
 <!-- Page-Title -->
 <div class="row">
 	<div class="col-sm-12">
-		<h4 class="page-title">Starter</h4>
+		<h4 class="page-title">Members</h4>
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">Ubold</a></li>
-			<li class="breadcrumb-item"><a href="#">Pages</a></li>
-			<li class="breadcrumb-item active">Starter</li>
+			<li class="breadcrumb-item"><a href="{{ route('tenant.dashboard.index') }}">Dashboard</a></li>
+			<li class="breadcrumb-item"><a href="{{ route('members.index') }}">Members</a></li>
+			<li class="breadcrumb-item active">List</li>
 		</ol>
 
 	</div>
@@ -37,25 +37,25 @@
 				</thead>
 
 				<tbody>
-					@foreach($instructors as $instructor)
+					@foreach($members as $member)
 					<tr>
-						<td>{{ $instructor->number }}</td>
-						<td>{{ $instructor->name() }}</td>
-						<td>{{ $instructor->phone }}</td>
-						<td>{{ $instructor->email }}</td>
-						<td>{{ $instructor->address }}</td>
-						<td>{{ $instructor->created_at }}</td>
-						<td>{{ $instructor->branch->name }}</td>
+						<td>{{ $member->number }}</td>
+						<td>{{ $member->name() }}</td>
+						<td>{{ $member->phone }}</td>
+						<td>{{ $member->email }}</td>
+						<td>{{ $member->address }}</td>
+						<td>{{ $member->created_at }}</td>
+						<td>{{ $member->branch->name }}</td>
 						<td>
-							@if($instructor->status)
+							@if($member->status)
 								<span class="label label-table label-success">Active</span>
 							@else
 								<span class="label label-table label-danger">Inactive</span>
 							@endif
 						</td>
 						<td class="actions">
-							<a href="{{ route('instructors.show', Hashids::encode($instructor->id)) }}" class="hidden on-editing text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details"><i class="fa fa-info"></i></a>
-							<a href="{{ route('instructors.edit', Hashids::encode($instructor->id)) }}" class="on-default text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+							<a href="{{ route('members.show', Hashids::encode($member->id)) }}" class="hidden on-editing text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details"><i class="fa fa-info"></i></a>
+							<a href="{{ route('members.edit', Hashids::encode($member->id)) }}" class="on-default text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
 							<a href="#" class="on-default text-danger delete" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
 						</td>
 					</tr>
