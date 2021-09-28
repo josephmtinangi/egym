@@ -29,6 +29,7 @@
 						<th>Sign Up fee</th>
 						<th>Fee</th>
 						<th>Status</th>
+						<th>Date Created</th>
 						<th>Options</th>
 					</tr>
 				</thead>
@@ -40,7 +41,14 @@
 						<td>{{ $membershipPlan->number_of_days }}</td>
 						<td>{{ $membershipPlan->signup_fee }}</td>
 						<td>{{ $membershipPlan->fee }}</td>
-						<td>{{ $membershipPlan->status }}</td>
+						<td>
+							@if($membershipPlan->status)
+								<span class="label label-table label-success">Active</span>
+							@else
+								<span class="label label-table label-danger">Inactive</span>
+							@endif
+						</td>
+						<td>{{ $membershipPlan->created_at }}</td>
 						<td class="actions">
 							<a href="{{ route('membership-plans.show', Hashids::encode($membershipPlan->id)) }}" class="hidden on-editing text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details"><i class="fa fa-info"></i></a>
 							<a href="{{ route('membership-plans.edit', Hashids::encode($membershipPlan->id)) }}" class="on-default text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>

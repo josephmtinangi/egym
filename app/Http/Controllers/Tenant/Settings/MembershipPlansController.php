@@ -7,6 +7,7 @@ use App\Models\MembershipPlan;
 use Illuminate\Http\Request;
 use App\Utilities\Helper;
 use Hash;
+use Str;
 
 class MembershipPlansController extends Controller
 {
