@@ -10,6 +10,9 @@
 
     <title>@yield('title') | {{ tenant('id') }}</title>
 
+    <!-- Sweet Alert -->
+    <link href="{{ asset('tenant/css/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
+
     <!-- DataTables -->
     <link href="{{ asset('tenant/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('tenant/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />    
@@ -366,8 +369,37 @@
 <script src="{{ asset('tenant/js/jquery.nicescroll.js') }}"></script>
 <script src="{{ asset('tenant/js/jquery.scrollTo.min.js') }}"></script>
 
+<!-- Sweet-Alert  -->
+<script src="{{ asset('tenant/js/sweetalert2.min.js') }}"></script>
+
 <script src="{{ asset('tenant/js/jquery.core.js') }}"></script>
 <script src="{{ asset('tenant/js/jquery.app.js') }}"></script>
+
+@if(session()->has('successMessage'))
+<script type="text/javascript">
+    swal(
+    {
+        title: 'Good job!',
+        text: "{{ session()->get('successMessage') }}",
+        type: 'success',
+        confirmButtonColor: '#4fa7f3'
+    }
+    )
+</script>
+@endif  
+
+@if(session()->has('errorMessage'))
+<script type="text/javascript">
+    swal(
+    {
+        title: 'Whoops!',
+        text: "{{ session()->get('errorMessage') }}",
+        type: 'danger',
+        confirmButtonColor: '#4fa7f3'
+    }
+    )
+</script>
+@endif
 
 <!-- Required datatable js -->
 <script src="{{ asset('tenant/js/jquery.dataTables.min.js') }}"></script>
