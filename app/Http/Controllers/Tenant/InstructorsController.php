@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Controllers\Controller;
 use App\Models\Instructor;
 use App\Models\User;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use App\Utilities\Helper;
 use Hash;
@@ -19,7 +20,7 @@ class InstructorsController extends Controller
      */
     public function index()
     {
-        $instructors = Instructor::latest()->paginate(20);
+        $instructors = Instructor::with(['user','branch'])->latest()->paginate(20);
         return view('tenant.instructors.index', compact('instructors'));
     }
 
@@ -30,7 +31,8 @@ class InstructorsController extends Controller
      */
     public function create()
     {
-        return view('tenant.instructors.create');
+        $branches = Branch::get();
+        return view('tenant.instructors.create', compact('branches'));
     }
 
     /**
@@ -56,6 +58,7 @@ class InstructorsController extends Controller
 
         $instructor = new Instructor;
         $instructor->number = $number;
+        $instructor->branch_id = $request->branch_id;
         $instructor->user_id = $user->id;
         $instructor->first_name = $request->first_name;
         $instructor->middle_name = $request->middle_name;
@@ -76,9 +79,10 @@ class InstructorsController extends Controller
      * @param  \App\Models\Instructor  $instructor
      * @return \Illuminate\Http\Response
      */
-    public function show(Instructor $instructor)
+    public function show($hashid)
     {
-        //
+        $instructor = Instructor::find(Helper::decode($hashid));
+        return view('tenant.instructors.show', compact('instructor'));
     }
 
     /**
@@ -87,9 +91,11 @@ class InstructorsController extends Controller
      * @param  \App\Models\Instructor  $instructor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Instructor $instructor)
+    public function edit($hashid)
     {
-        //
+        $instructor = Instructor::find(Helper::decode($hashid));
+        $branches = Branch::get();
+        return view('tenant.instructors.edit', compact('instructor','branches'));
     }
 
     /**
@@ -101,7 +107,21 @@ class InstructorsController extends Controller
      */
     public function update(Request $request, Instructor $instructor)
     {
-        //
+        $instructor = Instructor::find(Helper::decode($hashid));
+        
+        $instructor->branch_id = $request->branch_id;
+        $instructor->user_id = $user->id;
+        $instructor->first_name = $request->first_name;
+        $instructor->middle_name = $request->middle_name;
+        $instructor->last_name = $request->last_name;
+        $instructor->phone = '+255'.$request->phone;
+        $instructor->email = $request->email;
+        $instructor->address = $request->address;
+        $instructor->save();
+
+        $request->session()->flash('successMessage', 'Success');
+
+        return redirect('admin/instructors');
     }
 
     /**
