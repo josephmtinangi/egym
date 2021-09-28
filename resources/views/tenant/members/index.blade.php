@@ -56,7 +56,7 @@
 						<td class="actions">
 							<a href="{{ route('members.show', Hashids::encode($member->id)) }}" class="hidden on-editing text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details"><i class="fa fa-info"></i></a>
 							<a href="{{ route('members.edit', Hashids::encode($member->id)) }}" class="on-default text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-							<a href="#" class="on-default text-danger delete" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+							<a href="#" data-id="{{ Hashids::encode($member->id) }}" class="on-default text-danger delete" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
 						</td>
 					</tr>
 					@endforeach
@@ -65,5 +65,53 @@
 		</div>
 	</div>
 </div>
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        console.log('READY');
 
+            $('.delete').click(function () {
+                var id = $(this).data("id");
+
+                swal({
+                    text: 'Are you sure you want to delete?',
+                    type: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    showLoaderOnConfirm: true,
+                    preConfirm: function () {
+                        var url = "/api/members/" + id;
+                        return new Promise(function (resolve) {
+                            $.ajax({
+                                url: url,
+                                type: 'DELETE'
+                            })
+                                .done(function (response) {
+                                    console.log(response);
+                                    swal({
+                                        title: 'Success',
+                                        text: response.message,
+                                        type: 'success'
+                                    }).then(function () {
+                                        location.reload();
+                                    });
+                                })
+                                .fail(function (error) {
+                                    console.log(error);
+                                    swal({
+                                        title: 'Error',
+                                        text: error,
+                                        type: 'error'
+                                    });
+                                });
+                        });
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                });
+
+            });
+
+    });
+</script>
+@endpush
 @endsection

@@ -10,6 +10,8 @@ use App\Http\Controllers\Tenant\DashboardController;
 use App\Http\Controllers\Tenant\InstructorsController;
 use App\Http\Controllers\Tenant\MembersController;
 
+use App\Http\Controllers\Tenant\Api\MembersApiController;
+
 use App\Http\Controllers\Tenant\Settings\MembershipPlansController;
 
 /*
@@ -40,5 +42,10 @@ Route::middleware([
         });
 
     });
+
+    Route::middleware(['api'])->prefix('api')->group(function () {
+        Route::delete('members/{id}', [MembersApiController::class, 'destroy']);
+    });
+
 
 });

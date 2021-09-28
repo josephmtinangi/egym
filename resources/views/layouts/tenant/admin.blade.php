@@ -413,6 +413,8 @@
 <script src="{{ asset('tenant/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('tenant/js/buttons.print.min.js') }}"></script>
 
+@stack('scripts')
+
         <script type="text/javascript">
             $(document).ready(function() {
 
