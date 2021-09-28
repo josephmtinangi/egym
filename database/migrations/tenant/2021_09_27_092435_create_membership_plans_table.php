@@ -16,9 +16,11 @@ class CreateMembershipPlansTable extends Migration
         Schema::create('membership_plans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('number')->unique();
             $table->integer('number_of_days');
             $table->double('signup_fee')->default(0.0);
             $table->double('fee');
+            $table->double('status')->default(true);
             $table->timestamps();
         });
     }

@@ -105,7 +105,7 @@ class InstructorsController extends Controller
      * @param  \App\Models\Instructor  $instructor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Instructor $instructor)
+    public function update(Request $request, $hashid)
     {
         $instructor = Instructor::find(Helper::decode($hashid));
         
