@@ -1,6 +1,6 @@
 @extends('layouts.tenant.admin')
 
-@section('title', 'Instructors')
+@section('title', 'Members')
 
 @section('content')
 
@@ -46,5 +46,33 @@
 
 	</div>
 </div>
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        console.log('READY');
 
+        $('#start_date').val(moment().format('YYYY-MM-DD'));
+
+        $('#membership_plan_id').change(function () {
+        	var days = $(this).find(':selected').data("days");
+        	if(days){
+        		$('#end_date').val(moment().add(days, 'days').format('YYYY-MM-DD'));
+        	}
+        });
+
+        // $('#start_date').change(function () {
+        // 	var start_date = moment($('#start_date').val());
+        // 	console.log('start_date = ' + start_date);
+        // 	var days = $('#membership_plan_id').find(':selected').data("days");
+        // 	console.log('days = ' + days);
+        // 	if(days){
+        // 		var end_date = moment($('#end_date').val());
+        // 		var diffDays = moment.duration(start_date.diff(end_date)).asDays();
+        // 		console.log('diffDays = ' + diffDays);
+        // 		$('#end_date').val(moment().add(days, 'days').format('YYYY-MM-DD'));
+        // 	}
+        // });
+    });
+</script>
+@endpush
 @endsection

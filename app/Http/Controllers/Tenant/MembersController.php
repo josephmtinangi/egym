@@ -76,7 +76,10 @@ class MembersController extends Controller
          $member->address = $request->address;
          $member->save();
 
-         $member->plans()->attach($membershipPlan);
+         $member->plans()->attach($membershipPlan, [
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+         ]);
 
          $request->session()->flash('successMessage', 'Success');
 

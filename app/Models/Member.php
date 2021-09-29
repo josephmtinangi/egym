@@ -2,12 +2,19 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
     use HasFactory;
+
+    public function age()
+    {
+        return Carbon::parse($this->attributes['date_of_birth'])->age;
+    }    
 
     public function name()
     {
@@ -25,6 +32,6 @@ class Member extends Model
 
     public function plans()
     {
-        return $this->belongsToMany(MembershipPlan::class);
+        return $this->belongsToMany(MembershipPlan::class)->withPivot('start_date', 'end_date', 'active');
     }
 }

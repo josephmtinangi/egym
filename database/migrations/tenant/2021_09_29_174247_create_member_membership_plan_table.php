@@ -15,10 +15,13 @@ class CreateMemberMembershipPlanTable extends Migration
     {
         Schema::create('member_membership_plan', function (Blueprint $table) {
             $table->id();
+            $table->date('start_date');
+            $table->date('end_date');
             $table->unsignedBigInteger('member_id');
             $table->foreign('member_id')->references('id')->on('members');
             $table->unsignedBigInteger('membership_plan_id');
             $table->foreign('membership_plan_id')->references('id')->on('membership_plans');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

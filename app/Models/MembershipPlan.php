@@ -11,6 +11,6 @@ class MembershipPlan extends Model
 
     public function member()
     {
-        return $this->belongsToMany(Member::class);
+        return $this->belongsToMany(Member::class)->withPivot('start_date', 'end_date', 'active');
     }
 }

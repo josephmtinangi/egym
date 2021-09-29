@@ -10,6 +10,8 @@
 
     <title>@yield('title') | {{ tenant('id') }}</title>
 
+    <link href="{{ asset('tenant/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
+
     <!-- Sweet Alert -->
     <link href="{{ asset('tenant/css/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 
@@ -401,6 +403,10 @@
 </script>
 @endif
 
+<script src="{{ asset('tenant/js/moment.min.js') }}"></script>
+
+<script src="{{ asset('tenant/js/bootstrap-datepicker.min.js') }}"></script>
+
 <!-- Required datatable js -->
 <script src="{{ asset('tenant/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('tenant/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -418,13 +424,22 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
+                // Date Picker
+                jQuery('.datepicker').datepicker();
+                jQuery('.datepicker-autoclose').datepicker({
+                    format: 'yyyy-mm-dd',
+                    autoclose: true,
+                    todayHighlight: true
+                });       
+
                 // Default Datatable
                 $('#datatable').DataTable();
 
                 //Buttons examples
                 var table = $('#datatable-buttons').DataTable({
                     lengthChange: false,
-                    buttons: ['copy', 'excel', 'pdf']
+                    buttons: ['copy', 'excel', 'pdf'],
+                    ordering: false
                 });
 
                 table.buttons().container()

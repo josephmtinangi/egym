@@ -3,7 +3,7 @@
 		<label for="branch_id" class="col-form-label">Tawi<span class="text-danger">*</span></label>
 		<select name="branch_id" id="branch_id" class="form-control" required="required">
 			@foreach($branches as $branch)
-				<option value="{{ $branch->id }}">{{ $branch->name }}</option>
+			<option value="{{ $branch->id }}">{{ $branch->name }}</option>
 			@endforeach
 		</select>
 	</div>
@@ -38,11 +38,21 @@
 	</div>
 	<div class="form-group col-md-4">
 		<label for="date_of_birth" class="col-form-label">Date of birth</label>
-		<input type="date" class="form-control" name="date_of_birth" id="date_of_birth" value="{{ isset($member) ? $member->date_of_birth : old('date_of_birth') }}" placeholder="Date of birth">
+		<div class="input-group">
+			<input type="text" class="form-control datepicker-autoclose" name="date_of_birth" id="date_of_birth" placeholder="yyyy/mm/dd">
+			<div class="input-group-append">
+				<span class="input-group-text"><i class="md md-event-note"></i></span>
+			</div>
+		</div><!-- input-group -->
 	</div>
 	<div class="form-group col-md-4">
 		<label for="joining_date" class="col-form-label">Joining Date<span class="text-danger">*</span></label>
-		<input type="date" class="form-control" name="joining_date" id="joining_date" value="{{ isset($member) ? $member->joining_date : old('joining_date') }}" required="required" placeholder="Joining Date">
+		<div class="input-group">
+			<input type="text" class="form-control datepicker-autoclose" name="joining_date" id="joining_date" placeholder="yyyy/mm/dd">
+			<div class="input-group-append">
+				<span class="input-group-text"><i class="md md-event-note"></i></span>
+			</div>
+		</div><!-- input-group -->
 	</div>
 </div>
 <div class="form-row">
@@ -70,8 +80,26 @@
 		<select name="membership_plan_id" id="membership_plan_id" class="form-control" required="required">
 			<option value="">-Select-</option>
 			@foreach($membershipPlans as $membershipPlan)
-				<option value="{{ $membershipPlan->id }}">{{ $membershipPlan->name }} &middot; Tsh {{ $membershipPlan->fee }} &middot; {{ $membershipPlan->number_of_days }} days</option>
+			<option value="{{ $membershipPlan->id }}" data-days="{{ $membershipPlan->number_of_days }}">{{ $membershipPlan->name }} &middot; Tsh {{ $membershipPlan->fee }} &middot; {{ $membershipPlan->number_of_days }} days</option>
 			@endforeach
 		</select>
+	</div>
+	<div class="form-group col-md-3">
+		<label for="start_date" class="col-form-label">Start Date<span class="text-danger">*</span></label>
+		<div class="input-group">
+			<input type="text" class="form-control datepicker-autoclose" name="start_date" id="start_date" readonly="" placeholder="yyyy/mm/dd">
+			<div class="input-group-append">
+				<span class="input-group-text"><i class="md md-event-note"></i></span>
+			</div>
+		</div><!-- input-group -->
+	</div>
+	<div class="form-group col-md-3">
+		<label for="end_date" class="col-form-label">End Date<span class="text-danger">*</span></label>
+		<div class="input-group">
+			<input type="text" class="form-control datepicker-autoclose" name="end_date" id="end_date" readonly="" placeholder="yyyy/mm/dd">
+			<div class="input-group-append">
+				<span class="input-group-text"><i class="md md-event-note"></i></span>
+			</div>
+		</div><!-- input-group -->
 	</div>
 </div>
