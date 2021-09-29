@@ -45,6 +45,9 @@ class MembersController extends Controller
      */
     public function store(Request $request)
     {
+
+        $membershipPlan = MembershipPlan::find($request->membership_plan_id);
+
         $user = new User;
         $user->username = '+255'.$request->phone;
         $user->password = Hash::make($request->last_name);
@@ -54,29 +57,31 @@ class MembersController extends Controller
         $lastMember = Member::orderBy('id', 'desc')->first(['number']);
         if($lastMember)
         {
-         $numberInteger = (int)$lastMember->number + 1;
-         $number = Str::padLeft($numberInteger, 4, '0'); 
-     }        
+             $numberInteger = (int)$lastMember->number + 1;
+             $number = Str::padLeft($numberInteger, 4, '0'); 
+        }        
 
-     $member = new Member;
-     $member->number = $number;
-     $member->branch_id = $request->branch_id;
-     $member->user_id = $user->id;
-     $member->first_name = $request->first_name;
-     $member->middle_name = $request->middle_name;
-     $member->last_name = $request->last_name;
-     $member->gender = $request->gender;
-     $member->date_of_birth = $request->date_of_birth;
-     $member->joining_date = $request->joining_date;
-     $member->phone = '+255'.$request->phone;
-     $member->email = $request->email;
-     $member->address = $request->address;
-     $member->save();
+         $member = new Member;
+         $member->number = $number;
+         $member->branch_id = $request->branch_id;
+         $member->user_id = $user->id;
+         $member->first_name = $request->first_name;
+         $member->middle_name = $request->middle_name;
+         $member->last_name = $request->last_name;
+         $member->gender = $request->gender;
+         $member->date_of_birth = $request->date_of_birth;
+         $member->joining_date = $request->joining_date;
+         $member->phone = '+255'.$request->phone;
+         $member->email = $request->email;
+         $member->address = $request->address;
+         $member->save();
 
-     $request->session()->flash('successMessage', 'Success');
+         $member->plans()->attach($membershipPlan);
 
-     return redirect('admin/members');
- }
+         $request->session()->flash('successMessage', 'Success');
+
+         return redirect('admin/members');
+     }
 
     /**
      * Display the specified resource.
@@ -86,7 +91,7 @@ class MembersController extends Controller
      */
     public function show($hashid)
     {
-        $member = Member::find(Helper::decode($hashid));
+        $member = Member::with(['user', 'plans'])->find(Helper::decode($hashid));
         return view('tenant.members.show', compact('member'));
     }
 

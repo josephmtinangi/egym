@@ -22,4 +22,9 @@ class Member extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    public function plans()
+    {
+        return $this->belongsToMany(MembershipPlan::class);
+    }
 }
